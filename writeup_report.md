@@ -167,4 +167,6 @@ Epoch 00003: val_loss improved from 0.01262 to 0.01195, saving model to ./saved_
 12856/12856 [==============================] - 3460s 269ms/step - loss: 5.9531e-04 - val_loss: 0.0119
 Epoch 00004: val_loss did not improve from 0.01195
 12856/12856 [==============================] - 3459s 269ms/step - loss: 4.8946e-04 - val_loss: 0.0121
+Epoch 00005: val_loss did not improve from 0.01195
+12856/12856 [==============================] - 3469s 270ms/step - loss: 3.8266e-04 - val_loss: 0.0122
 ```
