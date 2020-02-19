@@ -1,6 +1,7 @@
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Flatten, Dense, Lambda, Conv2D, MaxPooling2D, Cropping2D
+from tensorflow.keras.layers import Flatten, Dense, Lambda, Conv2D, Dropout
+from tensorflow.keras.regularizers import l2
 
 def model(loss='mse', optimizer='adam'):
     model = Sequential([
@@ -12,44 +13,52 @@ def model(loss='mse', optimizer='adam'):
         Conv2D(filters = 24, 
                kernel_size = 5, 
                strides = 2, 
-               activation="relu"),
+               activation="elu",
+               kernel_regularizer=l2(0.001)),
 
         # Conv Layer 2
         Conv2D(filters = 36, 
                kernel_size = 5, 
                strides= 2, 
-               activation="relu"),
+               activation="elu",
+               kernel_regularizer=l2(0.001)),
 
         # Conv Layer 3
         Conv2D(filters = 48, 
                kernel_size = 5, 
                strides= 2, 
-               activation="relu"),
+               activation="elu",
+               kernel_regularizer=l2(0.001)),
 
         # Conv Layer 4
         Conv2D(filters = 64, 
                kernel_size = 3, 
                strides= 1, 
-               activation="relu"),
+               activation="elu",
+               kernel_regularizer=l2(0.001)),
 
         # Conv Layer 5
         Conv2D(filters = 64, 
                kernel_size = 3, 
                strides= 1, 
-               activation="relu"),
+               activation="elu",
+               kernel_regularizer=l2(0.001)),
 
         # Flatten Layer
         Flatten(),
 
         # Fully-connected Layer 1
-        Dense(units = 100),
+        Dense(units = 100, activation="elu", kernel_regularizer=l2(0.001)),
+       #  Dropout(0.2),
 
         # Fully-connected Layer 2
-        Dense(units = 50),
-
+        Dense(units = 50, activation="elu", kernel_regularizer=l2(0.001)),
+       #  Dropout(0.2),
+        
         # Fully-connected Layer 3
-        Dense(units = 10),
-
+        Dense(units = 10, activation="elu", kernel_regularizer=l2(0.001)),
+       #  Dropout(0.2),
+        
         # Output Layer
         Dense(units = 1),
     ])

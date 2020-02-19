@@ -53,7 +53,7 @@ The model.py file contains the code for training and saving the convolution neur
 
 #### 1. An appropriate model architecture has been employed
 
-My model consists of a convolution neural network with 3x3 and 5x5 filter sizes and depths between 24 and 53 (model.py lines 18-24) The model includes RELU layers to introduce nonlinearity and the data is normalized in the model using a Keras lambda layer.
+My model consists of a convolution neural network with 3x3 and 5x5 filter sizes and depths between 24 and 53 (model.py lines 18-24) The model includes ELU layers to introduce nonlinearity and the data is normalized in the model using a Keras lambda layer.
 
 #### 2. Attempts to reduce overfitting in the model
 
@@ -95,37 +95,50 @@ model = Sequential([
     Conv2D(filters = 24, 
             kernel_size = 5, 
             strides = 2, 
-            activation="relu"),
+            activation="elu",
+            kernel_regularizer=l2(0.001)),
     # Conv Layer 2
     Conv2D(filters = 36, 
             kernel_size = 5, 
             strides= 2, 
-            activation="relu"),
+            activation="elu",
+            kernel_regularizer=l2(0.001)),
     # Conv Layer 3
     Conv2D(filters = 48, 
             kernel_size = 5, 
             strides= 2, 
-            activation="relu"),
+            activation="elu",,
+            kernel_regularizer=l2(0.001)),
     # Conv Layer 4
     Conv2D(filters = 64, 
             kernel_size = 3, 
             strides= 1, 
-            activation="relu"),
+            activation="elu",
+            kernel_regularizer=l2(0.001)),
     # Conv Layer 5
     Conv2D(filters = 64, 
             kernel_size = 3, 
             strides= 1, 
-            activation="relu"),
+            activation="elu",
+            kernel_regularizer=l2(0.001)),
     # Flatten Layer
     Flatten(),
     # Fully-connected Layer 1
-    Dense(units = 100),
+    Dense(units = 100, 
+          activation="elu", 
+          kernel_regularizer=l2(0.001)),
     # Fully-connected Layer 2
-    Dense(units = 50),
+    Dense(units = 50, 
+          activation="elu", 
+          kernel_regularizer=l2(0.001)),
     # Fully-connected Layer 3
-    Dense(units = 10),
+    Dense(units = 10, 
+          activation="elu", 
+          kernel_regularizer=l2(0.001)),
     # Output Layer
-    Dense(units = 1),
+    Dense(units = 1, 
+          activation="elu", 
+          kernel_regularizer=l2(0.001)),
 ])
 ```
 
@@ -159,14 +172,14 @@ To augment the data sat, I also flipped images and angles thinking that this wou
 The given sample data set (minus the 20% validation set) has 24108 images when the data is augemented. The network was then trained for 5 epochs an GTX 1080 Ti GPU for approximately 4.8 hours.
 
 ```bash
-Epoch 00001: val_loss improved from inf to 0.01262, saving model to ./saved_models/20200217-184655/behavior_cloning_nvidia_model.001.h5
-12856/12856 [==============================] - 3467s 270ms/step - loss: 0.0024 - val_loss: 0.0126
-Epoch 00002: val_loss did not improve from 0.01262
-12856/12856 [==============================] - 3466s 270ms/step - loss: 7.3982e-04 - val_loss: 0.0130
-Epoch 00003: val_loss improved from 0.01262 to 0.01195, saving model to ./saved_models/20200217-184655/behavior_cloning_nvidia_model.003.h5
-12856/12856 [==============================] - 3460s 269ms/step - loss: 5.9531e-04 - val_loss: 0.0119
-Epoch 00004: val_loss did not improve from 0.01195
-12856/12856 [==============================] - 3459s 269ms/step - loss: 4.8946e-04 - val_loss: 0.0121
-Epoch 00005: val_loss did not improve from 0.01195
-12856/12856 [==============================] - 3469s 270ms/step - loss: 3.8266e-04 - val_loss: 0.0122
+Epoch 1/5
+12856/12856 [==============================] - 3722s 289ms/step - loss: 0.0879 - val_loss: 0.10447/behavior_cloning_nvidia_model.001.h5
+Epoch 2/5
+12856/12856 [==============================] - 3586s 279ms/step - loss: 0.0305 - val_loss: 0.020103007/behavior_cloning_nvidia_model.002.h5
+Epoch 3/5
+12856/12856 [==============================] - 3579s 278ms/step - loss: 0.0433 - val_loss: 0.020003007/behavior_cloning_nvidia_model.003.h5
+Epoch 4/5
+12856/12856 [==============================] - 3564s 277ms/step - loss: 0.0611 - val_loss: 0.0309
+Epoch 5/5
+12856/12856 [==============================] - 3570s 278ms/step - loss: 0.0431 - val_loss: 0.0573
 ```
